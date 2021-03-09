@@ -1,9 +1,0 @@
-Codigo,NombreTienda,CodigoPostal,Latitud,Longitud,m2_superficie,Empleados,AlquilerBase,AlquilerAñoContrato
-"001       ","Tienda Principal",28806,40.490637,-3.387406,220,6,2500.0000,1983
-"002","Tienda Murcia (no abierta)",,,,1,,,2010
-"003       ","Tienda Murcia 01",30500,38.059486,-1.208019,135,3,1000.0000,2011
-"004","Tienda Alicante (no abierta)",,,,1,,,2010
-"005       ","Tienda Alicante 01",3201,38.267927,-0.701854,200,5,2100.0000,2010
-"006       ","Tienda Alicante 02",3340,38.180463,-0.870836,95,3,650.0000,2011
-"009       ","Tienda La Coruña",15192,43.356368,-8.408616,120,4,1100.0000,2011
-"011       ","Tienda Castelldefels",8860,41.265454,1.984840,190,5,2300.0000,2011
