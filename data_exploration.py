@@ -10,6 +10,7 @@
 
 # -*- coding: utf-8 -*-
 
+from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
@@ -17,6 +18,22 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+
+# Sidebar
+st.sidebar.title("Parámetros de imputación")
+st.sidebar.markdown(
+    """
+    Puedes utilizar el selector de esta barra para cambiar en tiempo real
+    los valores de imputación para los datos, al seleccionar el método de
+    imputación.
+    """
+)
+
+imputers = ['mean', 'median', 'most_frequent']
+imputer_selector = st.sidebar.selectbox(
+    "Selecciona el método de imputación:",
+    imputers
+)
 
 # Load data
 data = pd.read_csv('data/datos_ventas.csv')
@@ -94,18 +111,16 @@ st.markdown(
     data.iloc[:, 1:3] = imputer.transform(data.iloc[:, 1:3])
     ```
 
-    > Para al parámetro `strategy` puedes seleccionar de las opciones a continuación
-    > algún otro método y comparar los diferentes resultados. Podrás apreciar en tiempo
-    > real los cambios de manera directa sobre la tabla de valores. El parámetro
-    > `strategy` de tu código en el objeto `SimpleImputer` puede recibir los valores
-    > `mean`, `median` y `most_frequent` (o incluso una constante).
-    """
-)
+    Para al parámetro `strategy` puedes seleccionar de las en la barra lateral
+    algún otro método y comparar los diferentes resultados. Podrás apreciar en tiempo
+    real los cambios de manera directa sobre la tabla de valores. El parámetro
+    `strategy` de tu código en el objeto `SimpleImputer` puede recibir los valores
+    `mean`, `median` y `most_frequent` (o incluso una constante).
 
-imputers = ['mean', 'median', 'most_frequent']
-imputer_selector = st.selectbox(
-    "Selecciona el método de imputación:",
-    imputers
+    > **Nota:** Fijé la barra del lado izquierdo para que posteriormente puedas
+    > seguir modificando los valores del imputador y que veas cómo varían los datos
+    > incluso en el reescalamiento.
+    """
 )
 
 imputer = SimpleImputer(missing_values=np.nan, strategy=imputer_selector)
@@ -209,16 +224,40 @@ indep_label_encoder = LabelEncoder()
 data['COMPRA'] = indep_label_encoder.fit_transform(data.iloc[:, 3])
 st.dataframe(data)
 
+st.header("Escalamiento de datos")
 st.markdown(
     """
-    Con esto concluimos el proceso de limpieza y transformación de datos,
-    en caso de querer extraer sólo las variables independientes y dependiente
+    Hasta este punto, estamos muy cerca de concluir el proceso de limpieza y transformación
+    de datos, puesto que ya sólo necesitamos realizar un reescalamiento de las variables
+    independientes a través de un proceso de normalización o estandarización (significa
+    que utilizamos la media y la varianza para transformar los datos para que ahora
+    tengan una distribución normal, de ahí el nombre de _normalizar_). 
+    
+    Esto podemos realizarlo de manera sencilla, nuevamente, utilizando `sklearn`.
+
+    ```python
+    from sklearn.preprocessing import StandardScaler
+
+    scaler = StandardScaler()
+    data.iloc[:, 2:7] = scaler.fit_transform(data.iloc[:, 2:7])
+    ```
+
+    Y de esta manera obtenemos los datos finales limpios y transformados.
+    """
+)
+scaler = StandardScaler()
+data.iloc[:, 2:7] = scaler.fit_transform(data.iloc[:, 2:7])
+st.dataframe(data)
+
+st.markdown(
+    """
+    En caso de querer extraer sólo las variables independientes y dependiente
     para usar en un modelo, podemos realizarlo de manera muy sencilla, sólo basta
     seleccionar las columnas que queremos para cada caso.
 
     ```python
-    x = data[['ALEMANIA', 'ESPANA', 'FRANCIA', 'EDAD', 'SALARIO']]
-    y = data[['COMPRA']]
+    x = data[['ALEMANIA', 'ESPANA', 'FRANCIA', 'EDAD', 'SALARIO']].values
+    y = data[['COMPRA']].values
     ```
 
     Así, podemos ver que tenemos en una variable `x` a la matriz con datos
