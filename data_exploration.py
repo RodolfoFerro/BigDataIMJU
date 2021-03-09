@@ -67,7 +67,7 @@ st.markdown(
     data = pd.read_csv('data/datos_ventas.csv')
     ```
 
-    > **Nota:** Para desplegar en pantlla los datos, puedes llamar directamente a la variable
+    > **Nota:** Para desplegar los datos en pantalla, puedes llamar directamente a la variable
     > desde una celda si usas Jupyter Notebooks/Lab o Google Colab o imprimir los datos con
     > la función `print`.
     > ```python
