@@ -64,8 +64,18 @@ st.markdown(
     ```python
     import pandas as pd
 
-    data = pd.read_csv('data(datos_ventas.csv')
+    data = pd.read_csv('data/datos_ventas.csv')
     ```
+
+    > **Nota:** Para desplegar en pantlla los datos, puedes llamar directamente a la variable
+    > desde una celda si usas Jupyter Notebooks/Lab o Google Colab o imprimir los datos con
+    > la función `print`.
+    > ```python
+    > # Desde un notebook
+    > data
+    > # Desde un script
+    > print(data)
+    > ```
 
     Al desplegar los datos deberías ver una tabla como la siguiente:
     """
@@ -86,7 +96,7 @@ st.markdown(
     """
     Como se mencionó en la sesión, de la tabla de datos que hemos desplegado, podemos
     observar algunas características, como el hecho de que hay algunos campos vacíos
-    `NaN`'s, o que tenemos variables categóricas. Esto lo arreglaremos con procesos
+    (`NaN`'s), o que tenemos variables categóricas. Esto lo arreglaremos con procesos
     de imputación y codificación de datos.
     """
 )
@@ -111,7 +121,7 @@ st.markdown(
     data.iloc[:, 1:3] = imputer.transform(data.iloc[:, 1:3])
     ```
 
-    Para al parámetro `strategy` puedes seleccionar de las en la barra lateral
+    Para el parámetro `strategy` puedes seleccionar de la barra lateral izquierda
     algún otro método y comparar los diferentes resultados. Podrás apreciar en tiempo
     real los cambios de manera directa sobre la tabla de valores. El parámetro
     `strategy` de tu código en el objeto `SimpleImputer` puede recibir los valores
@@ -136,7 +146,9 @@ st.markdown(
     que haremos será convertir los valores de las etiquetas a valores numéricos
     (como un identificador entero), para psoteriormente usar la transformación
     de _one-hot encoding_ y convertirlos a vectores unitarios (con una representación
-    del elemento por posición).
+    del elemento por posición). Para conservar los datos originales y ver cómo se
+    asignan categorías numéricas por nombre de país, crearé una nueva columna llamada
+    `LABEL_ENCODING` y la reordenaré para que quede a la derecha de la columna `PAIS`.
 
     Este proceso de _encoding_ se puede realizar directamente con Python utilizando
     el paquete `sklearn` como sigue:
@@ -150,8 +162,7 @@ st.markdown(
     ```
 
     Notemos en el código que se ha agregado una nueva columna y se ha reordenado para
-    aparecer junto a la columna `PAIS`, para pdoer observar la codificación general
-    definida para cada valor posible que toma la variable `PAIS`.
+    aparecer junto a la columna `PAIS`.
     """
 )
 label_encoder = LabelEncoder()
@@ -189,7 +200,7 @@ st.markdown(
     Esta última matriz de valores puede ser integrada la tabla de datos originales,
     para obtener la tabla de datos con variables independientes definitiva que podremos
     utilizar para crear un modelo de _machine learning_. Sólo faltará transformar la
-    variable dependiente (a predecir).
+    variable dependiente (a predecir) y reescalar los datos.
 
     Además, reordenamos las columnas para tener un mejor control e identificación
     visual de las variables.
@@ -217,7 +228,8 @@ st.markdown(
     data['COMPRA'] = indep_label_encoder.fit_transform(data.iloc[:, 3])
     ```
 
-    Esto cambiará los valores de la columna `COMPRA` de `Yes`/`No` a valores `1`/`0`.
+    Esto cambiará los valores de la columna `COMPRA` de `Yes`/`No` a valores `1`/`0`, como
+    se puede apreciar en la tabla de datos actualizada.
     """
 )
 indep_label_encoder = LabelEncoder()
@@ -242,7 +254,7 @@ st.markdown(
     data.iloc[:, 2:7] = scaler.fit_transform(data.iloc[:, 2:7])
     ```
 
-    Y de esta manera obtenemos los datos finales limpios y transformados.
+    Y de esta manera obtenemos los datos finales, limpios y transformados.
     """
 )
 scaler = StandardScaler()
