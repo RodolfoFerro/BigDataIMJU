@@ -104,7 +104,7 @@ st.markdown(
 st.subheader("Imputación de datos")
 st.markdown(
     """
-    Para la imputación de datos, podemos redefinir los campos necesarios (que estén
+    Para la imputación de datos podemos redefinir los campos necesarios (que estén
     vacíos) agregando un valor numérico; para ello, existen distintas estrategias,
     pues se pueden agregar valores definidos por la media, mediana, moda o alguna
     constante.
@@ -141,7 +141,7 @@ st.dataframe(data)
 st.subheader("_Encoding_ de datos")
 st.markdown(
     """
-    Para el _encoding_ o codificación de valores categóricos a valores numéricos,
+    Para el _encoding_ o codificación de valores categóricos a valores numéricos
     podemos utilizar varias aproximaciones. Para los valores de `PAIS`, los primero
     que haremos será convertir los valores de las etiquetas a valores numéricos
     (como un identificador entero), para psoteriormente usar la transformación
@@ -224,16 +224,16 @@ st.markdown(
     Para la variable dependiente repetiremos el proceso de transformación de etiquetas.
 
     ```python
-    indep_label_encoder = LabelEncoder()
-    data['COMPRA'] = indep_label_encoder.fit_transform(data.iloc[:, 3])
+    dep_label_encoder = LabelEncoder()
+    data['COMPRA'] = dep_label_encoder.fit_transform(data.iloc[:, 3])
     ```
 
     Esto cambiará los valores de la columna `COMPRA` de `Yes`/`No` a valores `1`/`0`, como
     se puede apreciar en la tabla de datos actualizada.
     """
 )
-indep_label_encoder = LabelEncoder()
-data['COMPRA'] = indep_label_encoder.fit_transform(data.iloc[:, 3])
+dep_label_encoder = LabelEncoder()
+data['COMPRA'] = dep_label_encoder.fit_transform(data.iloc[:, 3])
 st.dataframe(data)
 
 st.header("Escalamiento de datos")
